@@ -35,6 +35,7 @@ class Peer:
         print(f"File '{file_name}' downloaded successfully.")
         self.socket.close()
 
+
 if __name__ == "__main__":
     # Check for command-line arguments
     if len(sys.argv) != 2:
