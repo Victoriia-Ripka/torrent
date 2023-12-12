@@ -5,7 +5,6 @@ import sys
 HOST = "127.0.0.1"
 PORT = 5000
 
-
 class Peer:
     def __init__(self, host, port):
         # Initialize the Peer with its host, port, and create a socket for communication

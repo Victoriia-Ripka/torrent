@@ -4,15 +4,14 @@ import threading
 # Constants for the Tracker
 HOST = "127.0.0.1"
 PORT = 5000
-FILE_PATH = "upload/a.txt"
 
 class Tracker:
-    def __init__(self, host, port, file_path):
-        # Initialize the Tracker with host, port, file_path, and an empty list of peers
+    def __init__(self, host, port):
+        # Initialize the Tracker with host, port, and an empty list of peers
         self.host = host
         self.port = port
         # Mapping of file names to their paths
-        self.files = {"a.txt": "upload/a.txt", "b.txt": "upload/b.txt", "c.txt": "upload/c.txt"} 
+        self.files = {"a.txt": "storage/a.txt", "b.txt": "storage/b.txt", "c.txt": "storage/c.txt"} 
         # List to store connected Peers
         self.peers = []  
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -74,5 +73,5 @@ class Peer:
 
 if __name__ == "__main__":
     # Create a Tracker instance and start listening for connections
-    tracker = Tracker(HOST, PORT, FILE_PATH)
+    tracker = Tracker(HOST, PORT)
     tracker.start()
