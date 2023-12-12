@@ -5,6 +5,7 @@ import threading
 HOST = "127.0.0.1"
 PORT = 5000
 
+
 class Tracker:
     def __init__(self, host, port):
         # Initialize the Tracker with host, port, and an empty list of peers
@@ -26,8 +27,9 @@ class Tracker:
             # Accept incoming connection from a Peer
             client_socket, addr = self.server.accept()
             peer = Peer(client_socket, addr, self)
-            self.peers.append(peer) # Add the Peer to the list of connected Peers
+            self.peers.append(peer)  # Add the Peer to the list of connected Peers
             threading.Thread(target=peer.handle_peer).start()
+
 
 class Peer:
     # Initialize the Peer with its socket, address, and the tracker
@@ -70,6 +72,7 @@ class Peer:
                 self.socket.send(data)
                 data = file.read(1024)
         print(f"File '{file_path}' sent to {self.addr}")
+
 
 if __name__ == "__main__":
     # Create a Tracker instance and start listening for connections
