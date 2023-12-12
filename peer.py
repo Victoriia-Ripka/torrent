@@ -5,6 +5,7 @@ import sys
 HOST = "127.0.0.1"
 PORT = 5000
 
+
 class Peer:
     def __init__(self, host, port):
         # Initialize the Peer with its host, port, and create a socket for communication
@@ -19,7 +20,11 @@ class Peer:
 
         # Receive the list of available files from the tracker
         file_list = self.socket.recv(1024).decode()
-        print("Available files:", file_list)
+        if file_name not in file_list:
+            print('No such file in storage')
+            exit(3)
+
+        print("Available files: ", file_list)
 
         # Download a file from the Tracker and save it to the specified output_path
         with open(output_path, 'wb') as file:
@@ -43,5 +48,9 @@ if __name__ == "__main__":
 
     # Create a Peer instance and initiate the download process
     file_name = sys.argv[1]
-    peer = Peer(HOST, PORT)
+    try:
+        peer = Peer(HOST, PORT)
+    except ConnectionRefusedError:
+        print("Connection to the tracker failed. The tracker might be offline")
+        exit(2)
     peer.download_file(file_name, f"download/{file_name}")
