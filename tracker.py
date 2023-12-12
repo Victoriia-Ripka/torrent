@@ -28,7 +28,7 @@ class Tracker:
             # Accept incoming connection from a Peer
             client_socket, addr = self.server.accept()
             peer = Peer(client_socket, addr, self)
-            self.peers.append(peer) # Add the Peer to the list of connected Peers
+            self.peers.append(peer)  # Add the Peer to the list of connected Peers
             threading.Thread(target=peer.handle_peer).start()
 
 
