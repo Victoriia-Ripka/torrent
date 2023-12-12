@@ -4,7 +4,7 @@ import sys
 # Constants for the Peer
 HOST = "127.0.0.1"
 PORT = 5000
-FILE_PATH = "upload/a.txt"
+
 
 class Peer:
     def __init__(self, host, port):
@@ -14,7 +14,14 @@ class Peer:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.host, self.port))  # Connect to the Tracker
  
-    def download_file(self, output_path):
+    def download_file(self, file_name, output_path):
+        # Inform the tracker about the desired file
+        self.socket.send(file_name.encode())
+
+        # Receive the list of available files from the tracker
+        file_list = self.socket.recv(1024).decode()
+        print("Available files:", file_list)
+
         # Download a file from the Tracker and save it to the specified output_path
         with open(output_path, 'wb') as file:
             # Receive data from the Tracker
@@ -25,19 +32,16 @@ class Peer:
                 # Continue receiving data
                 data = self.socket.recv(1024)
         # Close the socket after downloading the file
-        print("File downloaded successfully.")
+        print(f"File '{file_name}' downloaded successfully.")
         self.socket.close()
 
 if __name__ == "__main__":
-    # Default values
-    HOST = "127.0.0.1"
-    PORT = 5000
-    FILE_PATH = "upload/a.txt"
-
     # Check for command-line arguments
-    # if len(sys.argv) == 4:
-    #     HOST, PORT, FILE_PATH = sys.argv[1:]
+    if len(sys.argv) != 2:
+        print("Usage: python peer.py <file_name>")
+        sys.exit(1)
 
     # Create a Peer instance and initiate the download process
-    peer = Peer(HOST, int(PORT))
-    peer.download_file("download/downloaded_file.txt")
+    file_name = sys.argv[1]
+    peer = Peer(HOST, PORT)
+    peer.download_file(file_name, f"download/{file_name}")
