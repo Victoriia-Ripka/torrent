@@ -56,7 +56,7 @@ class Peer:
     
     def send_file_list(self):
         # Send the list of available files to the Peer
-        file_list = ",".join(self.tracker.files.keys())
+        file_list = ", ".join(self.tracker.files.keys())
         self.socket.send(file_list.encode())
 
     def receive_file_name(self):

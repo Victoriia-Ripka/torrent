@@ -24,7 +24,7 @@ class Peer:
             print('No such file in storage')
             exit(3)
 
-        print("Available files: ", file_list)
+        print("Available files:", file_list)
 
         # Download a file from the Tracker and save it to the specified output_path
         with open(output_path, 'wb') as file:
